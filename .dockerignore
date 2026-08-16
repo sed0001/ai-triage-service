@@ -1,0 +1,22 @@
+# Секреты и локальные артефакты не попадают в образ
+.env
+.env.*
+logs
+data
+.venv
+__pycache__
+*.py[cod]
+*.db
+.pytest_cache
+.git
+.gitignore
+
+# В образ нужны только приложение и зависимости;
+# вспомогательные файлы можно не копировать
+README.md
+TZ.md
+docs
+tests
+scripts
+*.md
+*.pdf

@@ -1,0 +1,47 @@
+# Запуск на сервере одной командой: docker compose up -d
+# Требуется: Docker + Docker Compose v2. Предварительно создать .env и указать CADDY_DOMAIN.
+
+services:
+  triage:
+    # Основной сервис: FastAPI + SQLite
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      # Внутри контейнера данные и логи живут в томах (переживают перезапуски)
+      DB_PATH: /app/data/tickets.db
+      LOG_DIR: /app/logs
+    volumes:
+      - triage_data:/app/data
+      - triage_logs:/app/logs
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  caddy:
+    # Обратный прокси с автоматическим HTTPS (Let's Encrypt)
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CADDY_DOMAIN: ${CADDY_DOMAIN:-localhost}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      triage:
+        condition: service_healthy
+
+volumes:
+  triage_data:
+  triage_logs:
+  caddy_data:
+  caddy_config:

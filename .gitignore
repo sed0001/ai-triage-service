@@ -1,0 +1,25 @@
+# --- Python ---
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- Секреты (ключ LLM НЕ коммитим) ---
+.env
+.env.local
+.env.*
+
+# --- Артефакты работы сервиса ---
+# содержимое папок исключается, но пустые папки фиксируются через .gitkeep
+logs/*
+!logs/.gitkeep
+data/*.db
+data/*.db-*
+
+# --- IDE / ОС ---
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

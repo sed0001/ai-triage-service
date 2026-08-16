@@ -1,0 +1,5 @@
+# Домен задаётся переменной CADDY_DOMAIN в .env (для локальной проверки — localhost).
+# Для реального домена Caddy автоматически выпустит HTTPS-сертификат (Let's Encrypt).
+{$CADDY_DOMAIN:localhost} {
+    reverse_proxy triage:8000
+}
