@@ -367,3 +367,8 @@ python scripts/demo_client.py# демо-клиент: отправляет пр�
 - [ ] Логи в `logs/`: `app.log`, `error.log`, `requests.log`
 - [ ] README позволяет воспроизвести запуск за 5–10 минут
 - [ ] Тесты зелёные: `python scripts/run_checks.py`
+## Ссылки
+
+- Сайт-портфолио: https://craftstudio.run.place
+- Профиль GitHub: https://github.com/sed0001
+- Репозиторий: https://github.com/sed0001/ai-triage-service
